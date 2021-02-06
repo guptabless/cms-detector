@@ -2,6 +2,9 @@
 This tool detects the CMS which is being used on the website. The cms currenlty supported by it are 
 - WordPress 
 - Drupal
+- Joomla
+- Shopify
+- Wix
 
 
 ## Requirments:
