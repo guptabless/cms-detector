@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import bcolors
 import sys, argparse
+import os
 
 def banner():
     print("""
@@ -18,20 +19,25 @@ if(len(sys.argv)> 2):
     if (sys.argv[1] == '-u'):
         try:
             input_url= sys.argv[2]
-            status_code=requests.get(input_url).status_code
-            input_code=requests.get(input_url)
+            input_location = sys.argv[2]
 
-            parser = argparse.ArgumentParser()
-            parser.add_argument("-u", required=True)
-            args = parser.parse_args()
+            print(bcolors.BITALIC + "Checking for CMS ")
+            if (os.path.exists(input_location) != True):
+                status_code = requests.get(input_url).status_code
+                input_code = requests.get(input_url)
 
-            soup = BeautifulSoup(input_code.text, 'html.parser')
-            input_word = False
-            input_drupal = False
-            input_Joomla = False
-            input_shopify = False
-            input_wix = False
-            try:
+                parser = argparse.ArgumentParser()
+                parser.add_argument("-u", required=True)
+                args = parser.parse_args()
+
+                soup = BeautifulSoup(input_code.text, 'html.parser')
+                input_word = False
+                input_drupal = False
+                input_Joomla = False
+                input_shopify = False
+                input_wix = False
+
+                try:
                     for link in soup.find_all('link'):
                        input_cms = link.get('href')
                        if (input_cms != None):
@@ -47,24 +53,68 @@ if(len(sys.argv)> 2):
                         print(bcolors.BOLD + 'Application is using Drupal')
                     if (input_shopify == True):
                             print(bcolors.BOLD + 'Application is using Shopify')
-
-            except:
+                except:
                     print(bcolors.OKMSG + "CMS not detected")
-            try:
-               soup1 = BeautifulSoup(input_code.text, 'html.parser')
-               input_find = soup1.find(attrs={"name": "generator"})
-               if (input_find != None):
-                if 'Joomla' in input_find['content']:
-                        input_Joomla = True
-                elif 'Wix' in input_find['content']:
-                    input_wix = True
+
+                soup1 = BeautifulSoup(input_code.text, 'html.parser')
+                input_find = soup1.find(attrs={"name": "generator"})
+                if (input_find != None):
+                        if 'Joomla' in input_find['content']:
+                            input_Joomla = True
+                        elif 'Wix' in input_find['content']:
+                            input_wix = True
                 if (input_Joomla == True):
-                    print(bcolors.BOLD + 'Application is using Joomla')
+                        print(bcolors.BOLD + 'Application is using Joomla')
                 if (input_wix == True):
                         print(bcolors.BOLD + 'Application is using Wix')
-            except
-                print(bcolors.OKMSG + "CMS not detected For Joomla")
 
+            elif(os.path.exists(input_location) == True):
+                file = open(input_location, "r")
+                lines = file.readlines()
+                for te in lines:
+                    stest = te.strip()
+                    input_code = requests.get(stest)
+
+                    parser = argparse.ArgumentParser()
+                    parser.add_argument("-u", required=True)
+                    args = parser.parse_args()
+
+                    soup = BeautifulSoup(input_code.text, 'html.parser')
+                    input_word = False
+                    input_drupal = False
+                    input_Joomla = False
+                    input_shopify = False
+                    input_wix = False
+                    try:
+                        for link in soup.find_all('link'):
+                            input_cms = link.get('href')
+                            if (input_cms != None):
+                                if 'wp-content' in input_cms:
+                                    input_word = True
+                                elif 'core' in input_cms:
+                                    input_drupal = True
+                                elif 'shopify' in input_cms:
+                                    input_shopify = True
+                        if (input_word == True):
+                            print(bcolors.BOLD  + stest + ':  Application is using Word press')
+                        if (input_drupal == True):
+                            print(bcolors.BOLD + stest +':  Application is using Drupal')
+                        if (input_shopify == True):
+                            print(bcolors.BOLD  + stest +':  Application is using Shopify')
+                    except:
+                        print(bcolors.OKMSG + "CMS not detected")
+
+                    soup1 = BeautifulSoup(input_code.text, 'html.parser')
+                    input_find = soup1.find(attrs={"name": "generator"})
+                    if (input_find != None):
+                            if 'Joomla' in input_find['content']:
+                                input_Joomla = True
+                            elif 'Wix' in input_find['content']:
+                                input_wix = True
+                    if (input_Joomla == True):
+                            print(bcolors.BOLD + stest + ':  Application is using Joomla')
+                    if (input_wix == True):
+                            print(bcolors.BOLD + stest + 'Application is using Wix')
         except:
             print(bcolors.ERRMSG + 'Please enter python cms.py -u <valid URL with http:// or https://> ')
     elif ((sys.argv[1] == '-h') | (sys.argv[1] == '--help')):
