@@ -22,7 +22,7 @@ This tool detects the CMS which is being used on the website. The cms currenlty 
 
 ## usage: 
 
-cms.py  -u < Valid URL of the application whose CMS you want to check > 
+cms.py  -u < Valid URL of the application or txt file whose CMS you want to check > 
 
 
 OPTIONS: 
