@@ -36,6 +36,8 @@ if(len(sys.argv)> 2):
                 input_Joomla = False
                 input_shopify = False
                 input_wix = False
+                input_ghost = False
+                input_Magento = False
 
                 try:
                     for link in soup.find_all('link'):
@@ -47,26 +49,37 @@ if(len(sys.argv)> 2):
                                input_drupal=True
                            elif 'shopify' in input_cms:
                                input_shopify = True
+                           elif 'Magento' in input_cms:
+                               input_Magento = True
                     if (input_word == True):
-                        print(bcolors.BOLD + 'Application is using Word press')
+                        print(bcolors.BOLD + 'Application is using WordPress')
                     if (input_drupal == True):
                         print(bcolors.BOLD + 'Application is using Drupal')
                     if (input_shopify == True):
                             print(bcolors.BOLD + 'Application is using Shopify')
+                    if (input_Magento == True):
+                        print(bcolors.BOLD + 'Application is using Magento')
+
                 except:
                     print(bcolors.OKMSG + "CMS not detected")
 
                 soup1 = BeautifulSoup(input_code.text, 'html.parser')
                 input_find = soup1.find(attrs={"name": "generator"})
+
                 if (input_find != None):
                         if 'Joomla' in input_find['content']:
                             input_Joomla = True
                         elif 'Wix' in input_find['content']:
                             input_wix = True
+                        elif 'Ghost' in input_find['content']:
+                            input_ghost = True
+
                 if (input_Joomla == True):
                         print(bcolors.BOLD + 'Application is using Joomla')
                 if (input_wix == True):
                         print(bcolors.BOLD + 'Application is using Wix')
+                if (input_ghost == True):
+                    print(bcolors.BOLD + 'Application is using Ghost')
 
             elif(os.path.exists(input_location) == True):
                 file = open(input_location, "r")
@@ -85,6 +98,9 @@ if(len(sys.argv)> 2):
                     input_Joomla = False
                     input_shopify = False
                     input_wix = False
+                    input_ghost = False
+                    input_Magento = False
+
                     try:
                         for link in soup.find_all('link'):
                             input_cms = link.get('href')
@@ -95,12 +111,16 @@ if(len(sys.argv)> 2):
                                     input_drupal = True
                                 elif 'shopify' in input_cms:
                                     input_shopify = True
+                                elif 'Magento' in input_cms:
+                                    input_Magento = True
                         if (input_word == True):
-                            print(bcolors.BOLD  + stest + ':  Application is using Word press')
+                            print(bcolors.BOLD  + stest + ':  Application is using WordPress')
                         if (input_drupal == True):
                             print(bcolors.BOLD + stest +':  Application is using Drupal')
                         if (input_shopify == True):
                             print(bcolors.BOLD  + stest +':  Application is using Shopify')
+                        if (input_Magento == True):
+                            print(bcolors.BOLD + stest + 'Application is using Magento')
                     except:
                         print(bcolors.OKMSG + "CMS not detected")
 
@@ -111,10 +131,15 @@ if(len(sys.argv)> 2):
                                 input_Joomla = True
                             elif 'Wix' in input_find['content']:
                                 input_wix = True
+                            elif 'Ghost' in input_find['content']:
+                                input_ghost = True
+
                     if (input_Joomla == True):
                             print(bcolors.BOLD + stest + ':  Application is using Joomla')
                     if (input_wix == True):
                             print(bcolors.BOLD + stest + 'Application is using Wix')
+                    if (input_ghost == True):
+                            print(bcolors.BOLD + stest + 'Application is using Ghost')
         except:
             print(bcolors.ERRMSG + 'Please enter python cms.py -u <valid URL with http:// or https://> ')
     elif ((sys.argv[1] == '-h') | (sys.argv[1] == '--help')):
@@ -123,3 +148,4 @@ if(len(sys.argv)> 2):
 else:
     banner()
     print(bcolors.ERR + 'Please select atleast 1 option from (-u) or -h, with a valid domain name')
+
