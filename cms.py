@@ -147,5 +147,5 @@ if(len(sys.argv)> 2):
                             'show this help message and exit' '\n''-u URL of any website whoose cms you want to check,   --url URL')
 else:
     banner()
-    print(bcolors.ERR + 'Please select atleast 1 option from (-u) or -h, with a valid domain name')
+    print(bcolors.ERR + 'Please select atleast  1 option from (-u) or -h, with a valid domain name')
 
