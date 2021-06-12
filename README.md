@@ -5,6 +5,9 @@ This tool detects the CMS which is being used on the website. The cms currenlty 
 - Joomla
 - Shopify
 - Wix
+
+Update Added new CMS
+
 - Ghost
 - Magento
 
