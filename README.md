@@ -14,6 +14,7 @@ Update Added new CMS
 
 
 ## Requirments:
+here are the requirements such as pacakges an others
 
 ### packages 
 
