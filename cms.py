@@ -114,7 +114,7 @@ if(len(sys.argv)> 2):
                                 elif 'Magento' in input_cms:
                                     input_Magento = True
                         if (input_word == True):
-                            print(bcolors.BOLD  + stest + ':  Application is using WordPress')
+                            print(bcolors.BOLD  + stest + ':  Application is using the WordPress')
                         if (input_drupal == True):
                             print(bcolors.BOLD + stest +':  Application is using Drupal')
                         if (input_shopify == True):
